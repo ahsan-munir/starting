@@ -1,0 +1,302 @@
+/*================ TOOLS ================*/
+/* Tools – globally used mixins and functions. It’s important not to output any CSS in the first 2 layers. */
+/*============================================================================
+  line-height: line-height(28, 18)
+  Expected arguments are px values and unitless.
+==============================================================================*/
+@function line-height($height, $font-size) {
+  @return $height / $font-size;
+}
+
+/*============================================================================
+  font-size: rem(24)
+  Expected argument is a px value and unitless.
+==============================================================================*/
+@function rem($font-size) {
+  @return ($font-size / 10) + rem;
+}
+
+/*================ Mixins ================*/
+@mixin clearfix() {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+  zoom: 1;
+}
+
+@mixin visually-hidden() {
+  position: absolute !important; // sass-lint:disable-line no-important
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+@mixin visually-shown() {
+  position: inherit !important;  // sass-lint:disable-line no-important
+  overflow: auto;
+  clip: auto;
+  width: auto;
+  height: auto;
+  margin: 0;
+}
+
+/*============================================================================
+  Flexbox prefix mixins from Bourbon
+    https://github.com/thoughtbot/bourbon/blob/master/app/assets/stylesheets/css3/_flex-box.scss
+==============================================================================*/
+@mixin display-flexbox() {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%; // necessary for ie10
+}
+
+@mixin flex-wrap($value: nowrap) {
+  @include prefix(flex-wrap, $value, webkit moz ms spec);
+}
+
+@mixin align-items($value: stretch) {
+  $alt-value: $value;
+
+  @if $value == 'flex-start' {
+    $alt-value: start;
+  } @else if $value == 'flex-end' {
+    $alt-value: end;
+  }
+
+  -ms-flex-align: $alt-value; // sass-lint:disable-line no-misspelled-properties
+  @include prefix(align-items, $value, webkit moz ms o spec);
+}
+
+@mixin flex($value) {
+  @include prefix(flex, $value, webkit moz ms spec);
+}
+
+@mixin flex-flow($value) {
+  @include prefix(flex-flow, $value, webkit moz ms spec);
+}
+
+@mixin flex-basis($width: auto) {
+  // sass-lint:disable no-misspelled-properties
+  -ms-flex-preferred-size: $width;
+  @include prefix(flex-basis, $width, webkit moz spec);
+}
+
+@mixin align-self($align: auto) {
+  // sass-lint:disable no-misspelled-properties
+  -ms-flex-item-align: $align;
+  @include prefix(align-self, $align, webkit spec);
+}
+
+@mixin transform($transform) {
+  @include prefix(transform, #{$transform}, ms webkit spec);
+}
+
+@mixin justify-content($justify: flex-start) {
+  @include prefix(justify-content, $justify, webkit ms spec);
+}
+
+@mixin flex-direction($value) {
+  @include prefix(flex-direction, $value, webkit moz ms spec);
+}
+
+@mixin flex-order($value) {
+  @include prefix(order, $value, webkit ms spec);
+}
+
+/*============================================================================
+  Add vendor classes for setting placeholder text.
+
+  Parameters:
+    $color - CSS color value
+
+  Usage:
+    .container {
+      @include placeholder(#777)
+    }
+==============================================================================*/
+@mixin placeholder($color, $opacity) {
+  &::-webkit-input-placeholder {
+    color: $color;
+    opacity: $opacity;
+  }
+
+  &::-moz-placeholder {
+    color: $color;
+    opacity: $opacity;
+  }
+
+  &:-ms-input-placeholder {
+    color: $color;
+    opacity: $opacity;
+  }
+
+  &::placeholder {
+    color: $color;
+    opacity: $opacity;
+  }
+}
+
+/*============================================================================
+  Prefix mixin for generating vendor prefixes.
+  Based on https://github.com/thoughtbot/bourbon/blob/master/app/assets/stylesheets/addons/_prefixer.scss
+
+  Usage:
+    // Input:
+    .element {
+      @include prefix(transform, scale(1), ms webkit spec);
+    }
+
+    // Output:
+    .element {
+      -ms-transform: scale(1);
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+==============================================================================*/
+@mixin prefix($property, $value, $prefixes) {
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+      -webkit-#{$property}: $value;
+    } @else if $prefix == moz {
+      -moz-#{$property}: $value;
+    } @else if $prefix == ms {
+      -ms-#{$property}: $value;
+    } @else if $prefix == o {
+      -o-#{$property}: $value;
+    } @else if $prefix == spec {
+      #{$property}: $value;
+    } @else  {
+      @warn 'Unrecognized prefix: #{$prefix}';
+    }
+  }
+}
+
+/*================ Media Query Mixin ================*/
+@mixin media-query($media-query) {
+  $breakpoint-found: false;
+
+  @each $breakpoint in $grid-breakpoints {
+    $name: nth($breakpoint, 1);
+    $declaration: nth($breakpoint, 2);
+
+    @if $media-query == $name and $declaration {
+      $breakpoint-found: true;
+
+      @media only screen and #{$declaration} {
+        @content;
+      }
+    }
+  }
+
+  @if $breakpoint-found == false {
+    @warn 'Breakpoint "#{$media-query}" does not exist';
+  }
+}
+
+/*================ Responsive Show/Hide Helper ================*/
+@mixin responsive-display-helper($grid-breakpoint-type: '') {
+  // sass-lint:disable no-important
+  .#{$grid-breakpoint-type}show {
+    display: block !important;
+  }
+
+  .#{$grid-breakpoint-type}hide {
+    display: none !important;
+  }
+}
+
+/*================ Responsive Text Alignment Helper ================*/
+@mixin responsive-text-align-helper($grid-breakpoint-type: '') {
+  // sass-lint:disable no-important
+  .#{$grid-breakpoint-type}text-left {
+    text-align: left !important;
+  }
+
+  .#{$grid-breakpoint-type}text-right {
+    text-align: right !important;
+  }
+
+  .#{$grid-breakpoint-type}text-center {
+    text-align: center !important;
+  }
+}
+
+/*================ Overlay ================*/
+@mixin overlay($z-index: null) {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    @if ($z-index) {
+      z-index: $z-index;
+    }
+  }
+}
+
+/*================ Animatins ================*/
+@mixin animation($value) {
+  @include prefix(animation, $value, webkit spec);
+}
+
+@mixin keyframes($animation-name) {
+  /* Chr, Saf */
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+
+  /* IE >9, Fx >15, Op >12.0 */
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+
+/*================ Separator ================*/
+@mixin separator($position: null) {
+  &::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 6px;
+    margin-bottom: $gutter;
+    background-color: $color-primary;
+    transition: width 0.5s ease-out;
+
+    @if ($position == "center") {
+      margin: 0 auto $gutter;
+    } @else {
+      margin: 0 0 $gutter;
+    }
+  }
+
+  &.has-animated::before,
+  .supports-no-js &::before,
+  .animations--disabled &::before {
+    width: 80px;
+  }
+}
+
+@include keyframes(fadeInUp) {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    @include transform(translateY(0));
+    opacity: 1;
+  }
+}
+
+@import 'tools/_grid';
+

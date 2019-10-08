@@ -1,0 +1,873 @@
+/*================ Elements ================*/
+/*===Elements – styling for bare HTML elements (like H1, A, etc.). These come with default styling from the browser so we can redefine them here. ==*/
+/*================ Helper Classes ================*/
+
+.clearfix {
+  @include clearfix();
+}
+
+.visually-hidden {
+  position: absolute !important; // sass-lint:disable-line no-important
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  padding: 0;
+  border: 0;
+}
+
+.js-focus-hidden:focus {
+  outline: none;
+}
+
+.label--hidden {
+  position: absolute;
+  height: 0;
+  width: 0;
+  margin-bottom: 0;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+
+  // No placeholders, so force show labels
+  .supports-no-placeholder & {
+    position: static;
+    height: auto;
+    width: auto;
+    margin-bottom: 2px;
+    overflow: visible;
+    clip: initial;
+  }
+}
+
+// Hide element if JS is supported
+.supports-js--hide:not(html) {
+  display: none;
+}
+
+// Only show when JS is not supported
+.supports-no-js:not(html) {
+  html.supports-no-js & {
+    display: initial;
+  }
+}
+
+// Only show when JS is supported
+.supports-js {
+  html.supports-no-js & {
+    display: none;
+  }
+}
+
+/*============================================================================
+  Skip to content button
+    - Overrides .visually-hidden when focused
+==============================================================================*/
+.skip-link:focus {
+  clip: auto;
+  width: auto;
+  height: auto;
+  margin: 0;
+  color: $color-body-text;
+  background-color: $color-main-bg;
+  padding: $gutter / 2;
+  z-index: $z-index-skip-to-content;
+  transition: none;
+}
+
+/*================ Prepare Transition ================*/
+.is-transitioning {
+  // sass-lint:disable-block no-important
+  display: block !important;
+  visibility: visible !important;
+}
+
+/*=============== Image Transitions ===================*/
+.blur-up {
+  -webkit-filter: blur(5px);
+  filter: blur(5px);
+  transition: filter 400ms, -webkit-filter 400ms;
+}
+
+.blur-up.lazyloaded {
+  -webkit-filter: blur(0);
+  filter: blur(0);
+}
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 250ms ease-out;
+
+  &.lazyloaded {
+    opacity: 1;
+  }
+}
+
+/*================ Icons ================*/
+.icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+
+  .supports-no-svg & {
+    display: none;
+  }
+}
+
+svg,
+symbol {
+  &.icon:not(.icon--full-color) {
+    circle,
+    ellipse,
+    g,
+    line,
+    path,
+    polygon,
+    polyline,
+    rect {
+      fill: inherit;
+      stroke: inherit;
+    }
+  }
+
+}
+
+/*============================================================================
+  A generic way to visually hide content while
+  remaining accessible to screen readers (h5bp.com)
+==============================================================================*/
+.icon__fallback-text {
+  @extend .visually-hidden;
+
+  .supports-no-svg & {
+    position: static !important; // sass-lint:disable-line no-important
+    overflow: inherit;
+    clip: none;
+    height: auto;
+    width: auto;
+    margin: 0;
+  }
+}
+
+
+/*================ General layout styles ================*/
+body {
+  background-color: $color-main-bg;
+}
+
+.main-content--no-template {
+  padding-top: 50px;
+}
+
+.content-for-layout {
+  padding-bottom: $gutter * 3;
+  background-color: $color-main-bg;
+
+  @include media-query($medium-up) {
+    padding-bottom: $gutter * 6;
+  }
+
+  body.template-index &,
+  body.template-product &,
+  body.template-article & {
+    padding-bottom: 0;
+  }
+}
+
+.page-width {
+  @include clearfix();
+  max-width: $width-site;
+  padding: 0 $gutter;
+  margin: 0 auto;
+}
+
+.page-width--narrow {
+  max-width: $width-site - 200;
+}
+
+.page-width--no-gutter {
+  padding: 0;
+}
+
+.hide-page-content {
+  .content-for-layout,
+  .site-footer {
+    visibility: hidden;
+    overflow: hidden;
+    max-height: 0;
+  }
+}
+
+.disable-scroll,
+.disable-scroll body {
+  overflow: hidden;
+}
+
+.disable-scroll--ios,
+.disable-scroll--ios body {
+  height: 100%;
+}
+
+hr {
+  margin: ($gutter * 3) 0;
+}
+
+table {
+  width: 100%;
+
+  th {
+    text-align: left;
+  }
+}
+
+.outline-disabled :focus {
+  outline: 0;
+}
+
+.shopify-challenge__container {
+  margin-top: $gutter * 4;
+}
+
+.shopify-challenge__button {
+  margin-top: $gutter * 2 !important;
+}
+
+/*================ Links & Buttons ================*/
+a[href^="tel"] {
+  color: inherit;
+}
+
+.text-link {
+  display: inline;
+  border: 0 none;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+.btn,
+.btn--secondary {
+  @include prefix("user-select", "none", moz ms webkit spec);
+  @include prefix(appearance, none, webkit moz spec);
+  display: inline-block;
+  position: relative;
+  width: auto;
+  background-color: $color-button;
+  border-radius: 0;
+  color: $color-button-text;
+  border: 2px solid $color-button;
+  font-size: rem(12);
+  font-weight: $font-weight-bold;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 10px 30px;
+  line-height: 2.2;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: $button-transition;
+  box-sizing: border-box;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    outline: 2px solid $color-button;
+    transition: $button-transition;
+  }
+
+  &:not(.disabled):hover::after {
+    outline: 4px solid $color-primary;
+  }
+
+  &:not(.disabled):active::after {
+    outline: 0 solid $color-primary;
+  }
+
+  &[disabled],
+  &.disabled {
+    cursor: default;
+    opacity: $link-hover-opacity;
+
+    &:hover {
+      outline: 2px solid;
+    }
+  }
+
+  .btn--input {
+    padding: 0;
+  }
+
+  .icon {
+    color: currentColor;
+  }
+}
+
+.btn--secondary {
+  background-color: transparent;
+  color: $color-button;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    outline: 2px solid $color-button;
+    transition: $button-transition;
+  }
+
+  &:not(.disabled):hover::after {
+    outline: 4px solid $color-primary;
+  }
+}
+
+.btn--to-secondary {
+  .secondary-text {
+    display: none;
+  }
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $color-button-text;
+    opacity: 0;
+    @include transform(scaleX(0));
+    transition: all 0.2s ease-out;
+  }
+}
+
+.btn--to-secondary-transitioned {
+  @include prefix(animation-name, buttonText, webkit spec);
+  @include prefix(animation-duration, 1s, webkit spec);
+  @include prefix(animation-timing-function, steps(1, start), webkit spec);
+  line-height: 1.9;
+  color: $color-button;
+  border: 2px solid $color-button;
+  background-color: $color-main-bg;
+
+  .primary-text {
+    display: none;
+  }
+
+  .secondary-text {
+    display: inline;
+  }
+
+  &::before {
+    @include prefix(animation-name, buttonBackground, webkit spec);
+    @include prefix(animation-duration, 1s, webkit spec);
+    @include prefix(animation-timing-function, ease-out, webkit spec);
+    background-color: $color-main-bg;
+  }
+
+  &:not(.disabled):hover::after {
+    outline: 4px solid $color-primary;
+  }
+
+  &:not(.disabled):active::after {
+    outline: 2px solid $color-primary;
+  }
+}
+
+@include keyframes(buttonBackground) {
+  0% {
+    @include transform(scaleX(0));
+    opacity: 0;
+  }
+
+  20% {
+    @include transform(scaleX(1));
+    opacity: 1;
+  }
+
+  100% {
+    @include transform(scaleX(1));
+    opacity: 0;
+  }
+}
+
+@include keyframes(buttonText) {
+  0% {
+    background-color: transparent;
+  }
+
+  20% {
+    background-color: $color-button;
+  }
+
+  100% {
+    background-color: $color-main-bg;
+  }
+}
+
+.btn--large {
+  font-size: rem(18);
+  padding: $gutter ($gutter * 3);
+}
+
+.btn--small {
+  padding: 0 $gutter;
+}
+
+.btn--full {
+  width: 100%;
+}
+
+.btn--clear {
+  position: relative;
+  background-color: transparent;
+  border: 0;
+  color: $color-body-text;
+  transition: 0.15s opacity ease-out;
+
+  &:hover {
+    opacity: $link-hover-opacity;
+  }
+
+  &:hover::after,
+  &::after {
+    outline: 0 !important; // sass-lint:disable-line no-important
+  }
+}
+
+.btn--primary-color {
+  color: $color-primary;
+}
+
+.btn--hover-border {
+  &::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    right: 4px;
+    width: auto;
+    height: auto;
+    border-radius: 50px;
+    border: 2px solid $color-body-text;
+    opacity: 0;
+    transition: opacity 0.15s ease-out;
+    pointer-events: none;
+
+    @include media-query($medium-up) {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+.btn--hover-scale {
+  transition: transform 0.15s ease-out;
+
+  &:hover {
+    opacity: 1;
+    @include transform(scale(1.15));
+  }
+
+  &:active {
+    @include transform(scale(1));
+  }
+}
+
+.btn--square {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  text-align: center;
+  line-height: 50px;
+
+  .supports-no-svg & {
+    width: auto;
+  }
+}
+
+.btn-link {
+  padding: 0;
+  color: $color-primary;
+  border: 0;
+  border-bottom: 1px solid $color-primary;
+  background-color: transparent;
+  text-decoration: none;
+  font-size: rem(14);
+  line-height: 1;
+
+  &:hover {
+    opacity: $link-hover-opacity;
+  }
+}
+
+.btn-link--wide {
+  font-weight: $font-weight-bold;
+  border: 0;
+  letter-spacing: 1.5px;
+}
+
+.btn-group {
+  .btn {
+    vertical-align: top;
+    margin-right: $gutter;
+    margin-bottom: $gutter / 2;
+
+    &:last-child {
+      margin-right: 0;
+      margin-bottom: 0;
+    }
+  }
+}
+
+$loader-balls-background: rgba($color-button-text, 1);
+
+.btn--loader-active {
+  color: transparent;
+}
+
+/* Spinner 3Balls Scale */
+.btn--loader-balls,
+.btn--loader-balls:before,
+.btn--loader-balls:after {
+  display: inline-block;
+  border-radius: 50%;
+  background-color: $color-button-text;
+  width: 8px;
+  height: 8px;
+  transform-origin: center center;
+
+  .btn--loader & {
+    display: none;
+  }
+
+  .btn--loader-active & {
+    display: block;
+  }
+}
+
+.btn--loader-balls {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -4px 0 0 -4px;
+  background-color: $loader-balls-background;
+  opacity: 1;
+  @include animation(spScaleAlpha 1s infinite linear);
+}
+
+.btn--loader-balls:before,
+.btn--loader-balls:after {
+  content: "";
+  position: relative;
+  opacity: 0.25;
+}
+
+.btn--loader-balls:before {
+  left: 21px;
+  top: 0;
+  @include animation(spScaleAlphaBefore 1s infinite linear);
+}
+
+.btn--loader-balls:after {
+  left: -21px;
+  top: -8px;
+  @include animation(spScaleAlphaAfter 1s infinite linear);
+}
+
+@include keyframes(spScaleAlpha) {
+  0% {
+    opacity: 1;
+  }
+
+  33% {
+    opacity: 0.25;
+  }
+
+  66% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@include keyframes(spScaleAlphaBefore) {
+  0% {
+    opacity: 0.25;
+  }
+
+  33% {
+    opacity: 1;
+  }
+
+  66% {
+    opacity: 0.25;
+  }
+}
+
+@include keyframes(spScaleAlphaAfter) {
+  33% {
+    opacity: 0.25;
+  }
+
+  66% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.25;
+  }
+}
+
+/* ----------------------- Smart Payment Buttons ---------------------------- */
+.product-form__item ~ .shopify-payment-btn {
+  margin-top: $gutter * 1.5;
+}
+
+.shopify-payment-btn {
+  &[disabled],
+  &.disabled {
+    background-color: $color-button;
+    color: $color-button-text;
+  }
+}
+
+.shopify-payment-button {
+  margin-top: $gutter / 2;
+
+  .shopify-payment-button__button--unbranded {
+    @extend .btn;
+    width: 100%;
+
+    &:hover {
+      background-color: $color-button;
+    }
+  }
+
+  .shopify-payment-button__button--branded {
+    min-height: $gutter * 2.5;
+    transition: 0.25s transform ease-out;
+
+    &:hover {
+      @include prefix(transform, scale(1.01), ms webkit moz spec);
+    }
+  }
+
+  .shopify-payment-button__more-options {
+    @extend .text-small;
+    color: $color-primary;
+    width: auto;
+    margin: 12px auto 0;
+    text-decoration: underline;
+
+    &:hover {
+      opacity: $link-hover-opacity;
+    }
+  }
+}
+
+/*================ Lists ================*/
+.list--inline {
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: inline-block;
+    margin-bottom: 0;
+  }
+}
+
+/*================ General media helpers ================*/
+img {
+  max-width: 100%;
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+.video-wrapper {
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+  height: auto;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/*============================================================================
+  Responsive tables, defined with .responsive-table on table element.
+==============================================================================*/
+@include media-query($medium-up) {
+  .responsive-table {
+    th,
+    td {
+      padding: $gutter ($gutter / 4);
+      border-bottom: 1px solid $color-border;
+    }
+  }
+}
+
+@include media-query($small) {
+  .responsive-table {
+    thead {
+      display: none;
+    }
+
+    tr {
+      display: block;
+    }
+
+    th,
+    td {
+      display: block;
+      text-align: right;
+      padding: $gutter / 2;
+      margin: 0;
+    }
+
+    td::before {
+      content: attr(data-label);
+      float: left;
+      text-align: left;
+      padding-right: 10px;
+      max-width: 50%;
+    }
+  }
+
+  .responsive-table__row + .responsive-table__row,
+  tfoot > .responsive-table__row:first-child {
+    position: relative;
+    margin-top: 10px;
+    padding-top: $gutter / 2;
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: $gutter / 2;
+      right: $gutter / 2;
+      border-bottom: 1px solid $color-border;
+    }
+  }
+}
+
+/*================ Rich Text Editor ================*/
+.rte {
+  img {
+    height: auto;
+  }
+
+  table {
+    table-layout: fixed;
+  }
+
+  ul,
+  ol {
+    margin: 0 0 ($gutter / 2) $gutter;
+  }
+
+  ul {
+    list-style: disc outside;
+
+    ul {
+      list-style: circle outside;
+
+      ul {
+        list-style: square outside;
+      }
+    }
+  }
+}
+
+.text-center.rte,
+.text-center .rte {
+  ul,
+  ol {
+    margin-left: 0;
+    list-style-position: inside;
+  }
+}
+
+// allow table to scroll for tables in the RTE since we don't know
+// how many columns they will contain. Class added by JS.
+.rte__table-wrapper {
+  max-width: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch; // sass-lint:disable-line no-misspelled-properties
+}
+
+.rte a,
+.rte-setting a,
+.text-link {
+  position: relative;
+  color: $color-primary;
+  text-decoration: none;
+
+  &:not(.image-link)::after {
+    content: '';
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 2px;
+    border-bottom: 1px solid $color-primary;
+  }
+
+  &:hover,
+  &:focus {
+    opacity: $link-hover-opacity;
+  }
+}
+
+// Critical CSS Resets
+// -----------------------------------------------------------------------------
+//
+// These styles are used to override styles set by critical CSS in the
+// `critical-css.liquid` snippet.
+
+.critical-hide {
+  display: inherit;
+}
+
+.critical-clear {
+  opacity: 1;
+  visibility: visible;
+}
+
+.main-content .shopify-section {
+  display: inherit;
+}
+
+body:not(.template-index) .main-content {
+  opacity: 1;
+}

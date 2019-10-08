@@ -1,0 +1,700 @@
+/*================ Generic ================*/
+/* Generic – reset and/or normalize styles, box-sizing definition, etc. This is the first layer which generates actual CSS.
+*/
+/*============================================================================
+  #Normalize
+  Based on normalize.css v3.0.2 | MIT License | git.io/normalize
+==============================================================================*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+body,
+input,
+textarea,
+button,
+select {
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  background-color: transparent;
+}
+
+b,
+strong {
+  font-weight: $font-weight-bold;
+}
+
+em {
+  font-style: italic;
+}
+
+
+small {
+  font-size: 80%;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+img {
+  max-width: 100%;
+  border: 0;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+button,
+html input {
+  &[disabled] {
+    cursor: default;
+  }
+}
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+input {
+  &[type="search"],
+  &[type="number"],
+  &[type="email"],
+  &[type="password"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+textarea {
+  overflow: auto;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+
+/*============================================================================
+  Fast Tap
+  enables no-delay taps (FastClick-esque) on supporting browsers
+==============================================================================*/
+a,
+button,
+[role="button"],
+input,
+label,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
+html {
+  font-size: $font-size-base;
+}
+
+body,
+input,
+textarea,
+button,
+select {
+  font-family: $font-stack-body;
+  font-style: $font-style-body;
+  font-weight: $font-weight-body;
+  font-size: rem(16);
+  color: $color-body-text;
+  line-height: $font-line-height-base;
+
+  @include media-query($small) {
+    font-size: rem(14);
+  }
+}
+
+/*================ Headings ================*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $color-heading-text;
+  margin: 0 0 $gutter;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    font-weight: inherit;
+  }
+}
+
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: inherit;
+  text-transform: inherit;
+  font-family: $font-stack-header;
+  font-style: $font-style-header;
+  font-weight: $font-weight-header;
+}
+
+h5,
+h6 {
+  font-family: $font-stack-body;
+  font-style: $font-style-body;
+  font-weight: $font-weight-body;
+}
+
+h1 {
+  @include media-query($small) {
+    font-size: rem(34);
+    line-height: line-height(42, 34);
+  }
+
+  @include media-query($medium-up) {
+    font-size: rem(60);
+    line-height: line-height(72, 60);
+  }
+}
+
+h2 {
+  @include media-query($small) {
+    font-size: rem(30);
+    line-height: line-height(38, 30);
+  }
+
+  @include media-query($medium-up) {
+    font-size: rem(40);
+    line-height: line-height(49, 40);
+  }
+}
+
+h3 {
+  @include media-query($small) {
+    font-size: rem(28);
+    line-height: line-height(42, 28);
+  }
+
+  @include media-query($medium-up) {
+    font-size: rem(32);
+    line-height: line-height(36, 32);
+  }
+}
+
+h4 {
+  @include media-query($small) {
+    font-size: rem(22);
+    line-height: line-height(32, 22);
+  }
+
+  @include media-query($medium-up) {
+    font-size: rem(24);
+    line-height: line-height(36, 24);
+  }
+}
+
+h5 {
+  @include media-query($small) {
+    font-size: rem(20);
+    line-height: line-height(26, 20);
+  }
+
+  @include media-query($medium-up) {
+    font-size: rem(22);
+  }
+}
+
+h6 {
+  @include media-query($small) {
+    font-size: rem(16);
+    line-height: line-height(22, 16);
+  }
+
+  @include media-query($medium-up) {
+    font-size: rem(18);
+  }
+}
+
+.h1 {
+  @extend h1;
+}
+
+.h2 {
+  @extend h2;
+}
+
+.h3 {
+  @extend h3;
+}
+
+.h4 {
+  @extend h4;
+}
+
+.h5 {
+  @extend h5;
+}
+
+.h6 {
+  @extend h6;
+}
+
+/*================ RTE headings ================*/
+.rte {
+  @include clearfix();
+  margin-bottom: $gutter;
+
+  // If an .rte div is the last element in its parent,
+  // make it flush with the bottom of the container
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: $gutter * 2;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  p {
+    margin: 0 0 $gutter;
+  }
+
+  li {
+    margin-bottom: $gutter / 2;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.rte--contact {
+  margin-bottom: $gutter * 2;
+}
+
+/*================ Paragraph styles ================*/
+p {
+  margin: 0 0 $gutter;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.text-small {
+  font-size: rem(12);
+  line-height: line-height(18, 12);
+
+  @include media-query($medium-up) {
+    font-size: rem(14);
+    line-height: line-height(20, 14);
+  }
+}
+
+.text-small--uppercase {
+  font-size: rem(12);
+  letter-spacing: 1.7px;
+  line-height: line-height(20, 12);
+  text-transform: uppercase;
+}
+
+.text--emphasis {
+  font-style: italic;
+}
+
+.text-title {
+  font-family: $font-stack-body;
+  font-style: $font-style-body;
+  font-weight: $font-weight-bold;
+  font-size: rem(14);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/*================ Blockquote ================*/
+blockquote {
+  font-weight: $font-weight-bold;
+  border-left: 2px solid $color-primary;
+  margin: 0;
+  padding-left: $gutter;
+}
+
+cite {
+  font-style: normal;
+}
+
+/*================ Form elements ================*/
+label {
+  font-size: rem(14);
+  line-height: line-height(24, 14);
+  display: inline-block;
+  color: $color-heading-text;
+  margin-bottom: $gutter / 2;
+
+  &.label--full {
+    display: block;
+  }
+
+  &.input--error {
+    color: $color-error;
+  }
+}
+
+/*================ Hero and slideshow headers ================*/
+.mega-subtitle {
+  @include media-query($medium-up) {
+    margin: 0 auto;
+    max-width: 75%;
+  }
+
+  p {
+    color: inherit;
+  }
+}
+
+.mega-subtitle--large {
+  font-size: rem(20);
+  font-weight: $font-weight-header;
+}
+
+/*================ Strikethrough Style ================*/
+
+s {
+  position: relative;
+  text-decoration: none;
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: -5%;
+    width: 110%;
+    height: 1px;
+    background-color: $color-primary;
+  }
+}
+
+/*================ Slate specific reset ================*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+input,
+textarea,
+button,
+select {
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+form {
+  margin: 0;
+}
+
+// Prevent zoom on touch devices in active inputs
+@include media-query($medium-down) {
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+button,
+input[type="submit"],
+label[for] {
+  cursor: pointer;
+}
+
+optgroup {
+  font-weight: $font-weight-bold;
+}
+
+// Force option color (affects IE only)
+option {
+  color: $color-body-text;
+  background-color: $color-main-bg;
+}
+
+
+$color-blankstate: rgba($color-body-text, 0.35);
+$color-blankstate-background: $color-secondary-bg;
+
+.placeholder-svg {
+  display: block;
+  fill: $color-blankstate;
+  background-color: $color-blankstate-background;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.placeholder-noblocks {
+  padding: 40px;
+  text-align: center;
+}
+
+// Mimic a background image by wrapping the placeholder svg with this class
+.placeholder-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  .icon {
+    border: 0;
+  }
+}
+
+/*============================================================================
+  Form scaffolding
+    - Selectors setup for you to style form elements how you want
+    - Focus, error, and disabled states are set to be extended
+==============================================================================*/
+
+input[type='text'],
+input[type='email'],
+input[type='tel'],
+input[type='password'],
+input[type='search'],
+input[type='number'],
+textarea,
+select {
+  font-size: rem(14);
+  line-height: line-height(24, 14);
+  width: 100%;
+  margin-bottom: $gutter;
+  padding: ($gutter / 2) $gutter;
+  background-color: $color-input-background;
+  border: 1px solid $color-input-border;
+  border-radius: 0;
+  @include placeholder($color-body-text, 0.4);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  &[disabled] {
+    cursor: default;
+    background-color: $color-disabled;
+    border-color: $color-disabled-border;
+  }
+
+  &.input--error {
+    border-color: $color-error;
+  }
+
+  &.input--horizontal {
+    display: inline-block;
+    width: auto;
+  }
+
+  &.input--clear {
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  @include media-query($small) {
+    font-size: rem(16);
+    line-height: line-height(24, 16);
+  }
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/*================ Custom select style ================*/
+
+
+select {
+  @include prefix(appearance, none, webkit moz spec);
+  padding-right: 28px;
+  text-indent: 0.01px;
+  text-overflow: '';
+  cursor: pointer;
+
+  background-image: linear-gradient(45deg, transparent 50%, $color-primary 50%), linear-gradient(135deg, $color-primary 50%, transparent 50%);
+  background-position: calc(100% - 27px) calc(1rem + 10px), calc(100% - 23px) calc(1rem + 10px);
+  background-size: 4px 4px, 4px 4px;
+  background-repeat: no-repeat;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+/*================ Input Group ================*/
+.input-group {
+  position: relative;
+  display: table;
+  width: 100%;
+  border-collapse: separate;
+}
+
+.input-group--underline {
+  @extend .input-group;
+  border-bottom: 2px solid $color-body-text;
+
+  input[type='text'],
+  input[type='email'],
+  input[type='tel'],
+  input[type='password'],
+  input[type='search'],
+  input[type='number'] {
+    padding-left: $gutter / 2;
+    margin: 0;
+    background-color: transparent;
+    border: 0;
+  }
+
+  .icon {
+    fill: $color-body-text;
+  }
+
+  .btn {
+    color: $color-body-text;
+  }
+}
+
+.input-group__field,
+.input-group__btn {
+  display: table-cell;
+  margin: 0;
+  vertical-align: top;
+}
+
+.input-group__field input,
+.input-group__btn .btn {
+  height: $input-group-height;
+}
+
+.input-group__field {
+  width: 100%;
+}
+
+/*================ Miscellaneous Form Styles ================*/
+fieldset {
+  font-size: rem(12);
+  margin-bottom: $gutter;
+  padding: $gutter;
+  text-transform: uppercase;
+}
+
+/*================ Form feedback messages ================*/
+.note,
+.form-success,
+.form-error,
+.errors {
+  padding: 0;
+  margin: 0 0 $gutter;
+  text-align: left;
+}
+
+.note {
+  border: 1px solid $color-border;
+}
+
+.form-success {
+  color: $color-success;
+}
+
+.form-error,
+.errors {
+  color: $color-error;
+}
+
+.errors ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}

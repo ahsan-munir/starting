@@ -1,0 +1,189 @@
+/*================ SETTINGS ================*/
+/*========================================================================================
+  Settings – used with preprocessors and contain font, colors definitions, etc.
+   Variables
+    - All variables abstracted in one place, so linting can be run everywhere else
+=========================================================================================*/
+$settings-color-primary: #eb4f47;
+
+$settings-color-header-text: #e1c9b4;
+$settings-color-primary-heading-text: #4a4a4a;
+$settings-color-primary-body-text: #4a4a4a;
+$settings-color-button-text: #ffffff;
+
+$settings-color-header: #fff;
+$settings-color-footer-bg: #eae7e0;
+$settings-color-footer-text: #4a4a4a;
+$settings-color-main-bg: #faf9f6;
+$settings-color-secondary-bg: #f4f1ec;
+
+$settings-color-product-card: #fff;
+$settings-color-form-elements: #fff;
+$settings-color-cart-flag: #eb4f47;
+
+$settings-font-stack-header-weight: 400;
+$settings-font-weight-body: 400;
+$settings-font-weight-body-bold: 700;
+$settings-font-weight-body-semi-bold: 600;
+
+$settings-font-stack-header: "Arial", serif;
+$settings-font-style-header: normal;
+
+$settings-font-stack-body: "Arial", sans-serif;
+$settings-font-style-body: normal;
+
+$settings-font-size-base: 62.5%;
+
+  
+/*============================================================================
+  Grid Breakpoints and Class Names
+    - Do not change the variable names
+==============================================================================*/
+$grid-medium: 750px;
+$grid-large: 990px;
+$grid-widescreen: 1400px;
+$grid-gutter: 20px;
+
+$small: 'small';
+$medium: 'medium';
+$medium-down: 'medium-down';
+$medium-up: 'medium-up';
+$large: 'large';
+$large-down: 'large-down';
+$large-up: 'large-up';
+$widescreen: 'widescreen';
+
+// The `$grid-breakpoints` list is used to build our media queries.
+// You can use these in the media-query mixin.
+$grid-breakpoints: (
+  $small '(max-width: #{$grid-medium - 1})',
+  $medium '(min-width: #{$grid-medium}) and (max-width: #{$grid-large - 1})',
+  $medium-down '(max-width: #{$grid-large - 1})',
+  $medium-up '(min-width: #{$grid-medium})',
+  $large '(min-width: #{$grid-large}) and (max-width: #{$grid-widescreen - 1})',
+  $large-down '(max-width: #{$grid-widescreen - 1})',
+  $large-up '(min-width: #{$grid-large})',
+  $widescreen '(min-width: #{$grid-widescreen})'
+);
+
+/*============================================================================
+  Generate breakpoint-specific column widths and push classes
+    - Default column widths: $grid-breakpoint-has-widths: ($small, $medium-up);
+    - Default is no push classes
+    - Will not work if `theme/grid.scss` is removed
+==============================================================================*/
+$breakpoint-has-widths: ($small, $medium-up);
+$breakpoint-has-push: ($medium-up);
+
+/*================ Color Variables ================*/
+
+// General
+$color-primary: $settings-color-primary;
+$color-main-bg: $settings-color-main-bg;
+$color-secondary-bg: $settings-color-secondary-bg;
+$color-heading-text: $settings-color-primary-heading-text;
+$color-body-text: $settings-color-primary-body-text;
+
+// Header
+$color-header: $settings-color-header;
+$color-header-links: $settings-color-header-text;
+$color-cart-flag: $settings-color-cart-flag;
+
+// Footer
+$color-footer-bg: $settings-color-footer-bg;
+$color-footer-text: $settings-color-footer-text;
+
+// Border colors
+$color-border: rgba($color-body-text, 0.03);
+
+// Forms
+$color-input-background: $settings-color-form-elements;
+$color-input-border: $settings-color-form-elements;
+$input-group-height: 50px;
+
+// Buttons
+$color-button: $settings-color-primary;
+$color-button-text: $settings-color-button-text;
+$button-transition: outline 0.1s linear;
+
+// Collection and product cards
+$color-card-image-background: $settings-color-product-card;
+$color-card-text-background: $settings-color-product-card;
+$color-card-text: $settings-color-primary-body-text;
+$color-card-badge-background: $settings-color-primary;
+$color-card-badge-text: $settings-color-button-text;
+
+// Share Buttons
+$share-button-background: $settings-color-form-elements;
+
+// Gift card
+$giftcard-bubble-background: $settings-color-form-elements;
+$giftcard-bubble-color: $settings-color-primary-body-text;
+
+// Helper colors for form error states
+$color-disabled: #eee;
+$color-disabled-border: #eee;
+$color-error: #eb4f47;
+$color-success: #54ca80;
+
+// Overlays
+$color-transparent-white: rgba(255, 255, 255, 0.25);
+$color-drawer-overlay: #4a4a4a;
+
+// Navigation
+$dropdown-background: $settings-color-form-elements;
+
+/*================ Sizing Variables ================*/
+$width-site: 980px;
+$gutter: 20px;
+
+// Gift card
+$giftcard-code-border-radius: 4px;
+$giftcard-image-border-radius: 12px;
+
+/*================ Typography Variables ================*/
+$font-weight-body: $settings-font-weight-body;
+$font-weight-semi-bold: $settings-font-weight-body-semi-bold;
+$font-weight-bold: $settings-font-weight-body-bold;
+
+$font-weight-header: $settings-font-stack-header-weight;
+
+$font-stack-header: $settings-font-stack-header;
+$font-style-header: $settings-font-style-header;
+
+$font-stack-body: $settings-font-stack-body;
+$font-style-body: $settings-font-style-body;
+
+$font-size-base: $settings-font-size-base; // Henceforth known as 1em
+$font-line-height-base: 1.625;
+
+/*================ Anchor Variables ================*/
+$link-hover-opacity: 0.5;
+
+/*================ Z-Index ================*/
+
+$z-index-base: 5;
+$z-index-medium: 15;
+$z-index-high: 25;
+
+$z-index-parallax-footer: 1;
+$z-index-parallax-footer-body-content: 3;
+
+$z-index-header: 12;
+$z-index-skip-to-content: 10000;
+$z-index-modal: $z-index-header + 5;
+
+/*================ SVG ================*/
+$svg-select-icon: "ico-select.svg";
+
+/*================ AJAX Cart ================*/
+$cart-mobile-width: 300px;
+$cart-desktop-width: 400px;
+
+/*================ Product and Collection Cards ================*/
+$card-transition: all 500ms ease-out;
+
+/*================ Section Vertical Spacing ================*/
+$section-desktop-space: $gutter * 7;
+$section-mobile-space: $gutter * 4;
+
